@@ -36,8 +36,8 @@ input {
     padding: 12px 20px;
     margin-top: 10px;
     background: #a7c5e3;
-    text-align: center; /* Center the text in the input */
-    margin: 0 auto; /* Center the input in the container */
+    text-align: center;
+    margin: 0 auto; 
 }
 
 button {
@@ -112,15 +112,23 @@ input {
 }
 
 .score-container {
-    position: absolute;
-    top: 60px;
-    right: 20px;
+    position: fixed;
+    top: 24vh;
+    right: 66vh;
+    padding: 15px 20px;
+    background-color: #ccac00;
+    color: #000;
+    border-radius: 50%;
 }
 
 .time-container {
-    position: absolute;
-    top: 60px;
-    left: 20px;
+    position: fixed;
+    top: 26vh;
+    left: 66vh;
+    padding: 15px 10px;
+    background-color: #ccac00;
+    color: #000;
+    border-radius: 50%;
 }
 
 .end-game-container {
@@ -138,7 +146,7 @@ input {
 }
 
 .end-game-container.hide {
-    display: none; /* Hide the container */
+    display: none; 
 }
 
 #start-btn-top-left:hover {
