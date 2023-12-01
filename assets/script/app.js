@@ -185,12 +185,7 @@ const restartButton = document.getElementById('restart-btn');
 // Add click event listener to the Restart button
 restartButton.addEventListener('click', restartGame);
 
-// New selector for the Restart button within the container
-const restartButtonBlock = document.getElementById('restart-button');
-
-// Add click event listener to the Restart button
-restartButtonBlock.addEventListener('click', restartGame);
-
+// ...
 
 // New selector for the Start button at the top left
 const startButtonTopLeft = document.querySelector("#start-btn-top-left");
@@ -202,23 +197,24 @@ startGame();
 startButtonTopLeft.addEventListener('click', startGameCountdown);
 
 function restartGame() {
-    clearInterval(timeInterval);
-    score = 0;
-    time = 99; // Reset time to 99 seconds
-    wordsCopy = [...words]; // Reset the words array
-    addWordToElement();
+    if (gameStarted) {
+        clearInterval(timeInterval);
+        score = 0;
+        time = 99; // Reset time to 99 seconds
+        wordsCopy = [...words]; // Reset the words array
+        addWordToElement();
 
-    restartButton.classList.add('hide');
-    endGameElement.style.display = "none";
+        restartButton.classList.add('hide');
+        endGameElement.style.display = "none";
 
-    // Reset UI
-    scoreElement.innerHTML = score;
-    timeElement.innerHTML = time + "s";
+        // Reset UI
+        scoreElement.innerHTML = score;
+        timeElement.innerHTML = time + "s";
 
-    // Initiate countdown for the game to start again
-    startGameCountdown();
+        // Initiate countdown for the game to start again
+        startGameCountdown();
+    }
 }
-
 
 // Typing event
 text.addEventListener("input", (e) => {
