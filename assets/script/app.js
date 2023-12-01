@@ -100,7 +100,7 @@ function handleInput(e) {
 
 // Countdown timer for starting the game
 function startGameCountdown() {
-    startButtonTopLeft.disabled = true; // Disable the Start button during countdown
+    startButtonTopLeft.disabled = false; // Disable the Start button during countdown
     startButtonTopLeft.style.display = "none"; // Hide the Start button during countdown
 
     // 3-second countdown
