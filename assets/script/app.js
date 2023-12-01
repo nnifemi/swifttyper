@@ -103,8 +103,6 @@ function startGameCountdown() {
     startButtonTopLeft.disabled = true; // Disable the Start button during countdown
     startButtonTopLeft.style.display = "none"; // Hide the Start button during countdown
 
-    addWordToElement(); // Set the initial word before the countdown
-
     // 3-second countdown
     let countdown = 3;
     const countdownInterval = setInterval(() => {
