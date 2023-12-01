@@ -1,0 +1,223 @@
+@charset "utf-8";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('https://images.unsplash.com/photo-1580584126903-c17d41830450?q=80&w=1939&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Nova Square', sans-serif;
+}
+
+.container {
+    background-color: #ff0000; /* Red with 70% opacity */
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    color: #ccac00;
+    position: relative;
+    text-align: center;
+    width: 500px;
+}
+
+input {
+    border: 0;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 300px;
+    padding: 12px 20px;
+    margin-top: 10px;
+    background: #a7c5e3;
+    text-align: center; /* Center the text in the input */
+    margin: 0 auto; /* Center the input in the container */
+}
+
+button {
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 5px 15px;
+}
+
+select {
+    width: 200px;
+    padding: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    background-color: #a7c5e3;
+}
+
+select:focus,
+button:focus {
+    outline: 0;
+}
+
+.settings-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background: #a7c5e3;
+}
+
+.settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.settings.hide {
+    transform: translateY(-100%);
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 800;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 0 0 40px;
+}
+
+h1 {
+    margin: 0;
+}
+
+input {
+    font-family: 'Nova Square', Geneva, Tahoma, sans-serif;
+    border: 0;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 300px;
+    padding: 12px 20px;
+    margin-top: 10px;
+    color: #ccac00;
+    background: #393737;
+}
+
+.score-container {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+}
+
+.time-container {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+}
+
+.end-game-container {
+    background-color: inherit;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.end-game-container.hide {
+    display: none; /* Hide the container */
+}
+
+#start-btn-top-left:hover {
+    background-color: #a00f0f;
+}
+
+#start-btn-top-left {
+    background-color: #ff0000;
+    position: fixed;
+    font-family: 'Nova Square', sans-serif;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 500;
+    font-size: 20px;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+#restart-btn {
+    background-color: #000000;
+    color: #fff;
+    padding: 10px 20px;
+    font-family: 'Nova Square', sans-serif;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    z-index: 2;
+    position: absolute;
+    margin-left: 22vh;  
+}
+
+#restart-btn:hover {
+    background-color: #000000;
+}
+
+.hide {
+    display: none;
+}
+
+#countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000cc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    color: #fff;
+    font-size: 2em;
+}
+
+#countdown {
+    margin-bottom: 20px;
+}
+
+#ready, #set, #go {
+    display: none;
+}
+
+#restart-button:hover {
+    background-color: #a00f0f;
+}
+
+#restart-button {
+    background-color: #ff0000;
+    position: fixed;
+    font-family: 'Nova Square', sans-serif;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 500;
+    font-size: 20px;
+    bottom: 10px;
+    left: 10px;
+    z-index: 2;
+}
