@@ -100,7 +100,7 @@ function handleInput(e) {
 
 // Countdown timer for starting the game
 function startGameCountdown() {
-    startButtonTopLeft.disabled = false; // Disable the Start button during countdown
+    startButtonTopLeft.disabled = true; // Disable the Start button during countdown
     startButtonTopLeft.style.display = "none"; // Hide the Start button during countdown
 
     // 3-second countdown
@@ -185,7 +185,12 @@ const restartButton = document.getElementById('restart-btn');
 // Add click event listener to the Restart button
 restartButton.addEventListener('click', restartGame);
 
-// ...
+// New selector for the Restart button within the container
+const restartButtonBlock = document.getElementById('restart-button');
+
+// Add click event listener to the Restart button
+restartButtonBlock.addEventListener('click', restartGame);
+
 
 // New selector for the Start button at the top left
 const startButtonTopLeft = document.querySelector("#start-btn-top-left");
@@ -215,6 +220,7 @@ function restartGame() {
         startGameCountdown();
     }
 }
+
 
 // Typing event
 text.addEventListener("input", (e) => {
