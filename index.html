@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Nifemi Leye">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Square&display=swap" rel="stylesheet">
+    <script src="./assets/script/app.js" type="module"></script>
+    <link rel="stylesheet" href="./assets/style/index.css" media="all">
+    <title>SwiftTyper</title>
+</head>
+<body>
+    <audio id="background-music" loop>
+        <source src="./assets/audio/game-bg.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <div id="settings" class="settings"></div>
+    
+    <div id="countdown-overlay" class="hide">
+        <div id="countdown"></div>
+        <div id="ready">Ready?</div>
+        <div id="set">Set</div>
+        <div id="go">Go!</div>
+    </div>
+    
+
+    <div class="container">
+        <h2>SwiftTyper</h2>
+        <small>Type the following:</small>
+
+        <h1 id="word"></h1>
+
+        <input type="text" id="text" autocomplete="off" placeholder="Type the word here..." />
+
+        <div class="timer-container">
+            <p class="time-container">Time left: <span id="time">99s</span></p>
+        </div>
+
+        <p class="score-container">Score: <span id="score">0</span></p>
+        <button id="restart-button" onclick="restartGame()" class="settings-btn">
+            Restart
+        </button>
+        <div id="end-game-container" class="end-game-container"></div>
+        <button id="restart-btn" onclick="restartGame()" class="settings-btn hide">
+            Restart
+        </button>
+    </div>
+    <button id="start-btn-top-left" onclick="restartGame()">
+        Start
+    </button>
+</body>
+</html>
