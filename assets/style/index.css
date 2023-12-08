@@ -18,7 +18,7 @@ body {
 }
 
 .container {
-    background-color: #ff0000; /* Red with 70% opacity */
+    background-color: #c00b0b; /* Red with 70% opacity */
     padding: 20px;
     border-radius: 4px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
@@ -89,14 +89,19 @@ button:focus {
 
 h2 {
     font-size: 30px;
-    font-weight: 800;
+    font-family: 'Finger Paint', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     padding: 8px;
     border-radius: 4px;
     margin: 0 0 40px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 h1 {
     margin: 0;
+    font-size: 40px;
+    margin-bottom: 20px;
 }
 
 input {
@@ -105,30 +110,49 @@ input {
     border-radius: 4px;
     font-size: 14px;
     width: 300px;
+    margin-bottom: 25px;
     padding: 12px 20px;
     margin-top: 10px;
     color: #ccac00;
     background: #393737;
 }
 
+.creator-name {
+    font-family: 'Finger Paint', Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .score-container {
-    position: fixed;
-    top: 24vh;
-    right: 66vh;
-    padding: 15px 20px;
+    position: absolute;
+    bottom: 39.4vh;
+    right: 0;   
+    margin-top: 10px;
+    z-index: 1;
+    width: 60px;
+    height: 60px;
+    text-align: center;
     background-color: #ccac00;
     color: #000;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .time-container {
-    position: fixed;
-    top: 26vh;
-    left: 66vh;
-    padding: 15px 10px;
+    position: absolute;
+    bottom: 42vh;
+    z-index: 1;
+    right: 59vh;
+    width: 55px;
+    height: 55px;
     background-color: #ccac00;
     color: #000;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .end-game-container {
@@ -172,17 +196,18 @@ input {
     padding: 10px 20px;
     font-family: 'Nova Square', sans-serif;
     border: none;
-    border-radius: 4px;
+    border-radius: 30px;
     cursor: pointer;
     margin-top: 20px;
     font-size: 16px;
     z-index: 2;
     position: absolute;
-    margin-left: 22vh;  
+    margin-left: 10vh;  
 }
 
 #restart-btn:hover {
-    background-color: #000000;
+    transition: 0.5s ease-in-out;
+    background-color: #818080;
 }
 
 .hide {
@@ -228,4 +253,81 @@ input {
     bottom: 10px;
     left: 10px;
     z-index: 2;
+}
+
+.scoreboard-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: 0;  /* Adjusted to be on the right side */
+    transform: translate(0, -50%);
+    background-color: rgba(246, 208, 16, 0.9); 
+    padding: 20px;
+    height: 100vh;  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.scoreboard-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scoreboard-container li {
+    margin: 10px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+#no-scores {
+    display: none;
+    z-index: -2;
+}
+
+#show-scoreboard-btn {
+    color: #fff;
+    background-color: #818080;
+    padding: 10px 20px;
+    font-family: 'Nova Square', sans-serif;
+    border: none;
+    border-radius: 30px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 2;
+    position: absolute;
+    margin-left: 28vh;
+    position: absolute;
+    top: 31.1vh;
+    right: 9vh;
+}
+
+#show-scoreboard-btn:hover {
+    transition: 0.5s ease-in-out;
+    background-color: #000000;
+}
+
+.clear-scoreboard-btn {
+    color: #fff;
+    background-color: #ccac00; 
+    padding: 10px 20px;
+    font-family: 'Nova Square', sans-serif;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    display: none;
+    z-index: 2;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.clear-scoreboard-btn:hover {
+    background-color: #a7c5e3; 
+    transition: 0.5s ease-in-out;
 }
