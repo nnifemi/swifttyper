@@ -443,8 +443,6 @@ text.addEventListener("input", (e) => {
             e.target.value = "";
         }
     } else {
-        // If the input is invalid or game not started, you can handle it here.
-        // For now, I'm just clearing the input.
         e.target.value = "";
     }
 });
