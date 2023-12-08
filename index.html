@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nova+Square&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
     <script src="./assets/script/app.js" type="module"></script>
     <link rel="stylesheet" href="./assets/style/index.css" media="all">
     <title>SwiftTyper</title>
@@ -29,18 +32,15 @@
     
 
     <div class="container">
-        <h2>SwiftTyper</h2>
-        <small>Type the following:</small>
+        <h2>Lets Play SwiftTyper!</h2>
 
         <h1 id="word"></h1>
 
         <input type="text" id="text" autocomplete="off" placeholder="Type the word here..." />
-
-        <div class="timer-container">
+        <p class="creator-name">Created by Nifemi Leye</p>
             <div class="time-container"><span id="time">99s</span></div>
-        </div>
 
-        <p class="score-container">Score: <span id="score">0</span></p>
+        <p class="score-container">Score:  <span id="score"> 0</span></p>
         <button id="restart-button" onclick="restartGame()" class="settings-btn">
             Restart
         </button>
@@ -48,7 +48,13 @@
         <button id="restart-btn" onclick="restartGame()" class="settings-btn hide">
             Restart
         </button>
+        <button id="show-scoreboard-btn" class="hide" onclick="displayScoreboard()">Show Scoreboard</button>
     </div>
+
+    <div id="scoreboard-container" class="scoreboard-container">
+    </div>
+    <button id="clear-scoreboard-btn" class="clear-scoreboard-btn">Clear Scoreboard</button>
+
     <button id="start-btn-top-left" onclick="restartGame()">
         Start
     </button>
