@@ -1,5 +1,29 @@
 'use strict';
 
+class Score {
+    #date;
+    #hits;
+    #percentage;
+
+    constructor(date, hits, totalWords) {
+        this.#date = date;
+        this.#hits = hits;
+        this.#percentage = (hits / totalWords) * 100;
+    }
+
+    get date() {
+        return this.#date;
+    }
+
+    get hits() {
+        return this.#hits;
+    }
+
+    get percentage() {
+        return this.#percentage;
+    }
+}
+
 // Selectors
 const word = document.querySelector("#word");
 const text = document.querySelector("#text");
@@ -7,6 +31,7 @@ const scoreElement = document.querySelector("#score");
 const timeElement = document.querySelector("#time");
 const endGameElement = document.querySelector("#end-game-container");
 const backgroundMusic = document.querySelector("#background-music");
+const scoreboardContainer = document.querySelector("#scoreboard-container");
 
 const words = [
     'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building',
@@ -35,9 +60,10 @@ let originalState = null; // Store the original game state
 let wordsCopy = [...words]; // Make a copy of the original words array
 let randomWord;
 let score = 0;
-let time = 99; // Initial time set to 99 seconds
+let time = 15; // Initial time now set to 15 seconds
 let timeInterval = setInterval(updateGameTime, 1500); 
 let gameStarted = false; // Track if the game has started
+let scores = JSON.parse(localStorage.getItem('scores')) || [];
 
 // Focus on text input on start
 text.focus();
@@ -56,7 +82,7 @@ document.body.addEventListener('click', function (event) {
 function startGame() {
     // Initialize the game state
     score = 0;
-    time = 99;
+    time = 15; // Updated initial time to 15 seconds
     wordsCopy = [...words];
     addWordToElement();
 
@@ -77,12 +103,17 @@ function startGame() {
 
 // Function to handle text input during the game
 function handleInput(e) {
+    // Check if the game is over
+    if (!gameStarted) {
+        return;
+    }
+
     const insertedText = e.target.value;
 
     // Validate input
     const validInput = /^[a-zA-Z ]*$/.test(insertedText); // Only letters and spaces allowed
 
-    if (validInput && gameStarted) {
+    if (validInput) {
         const cleanedText = insertedText.trim().toLowerCase();
 
         if (cleanedText === randomWord) {
@@ -92,8 +123,6 @@ function handleInput(e) {
             e.target.value = '';
         }
     } else {
-        // If the input is invalid or game not started, you can handle it here.
-        // For now, I'm just clearing the input.
         e.target.value = '';
     }
 }
@@ -127,6 +156,7 @@ function updateGameTime() {
             timeDisplay.innerHTML = time + "s";
         } else {
             gameOver();
+            clearInterval(timeInterval); // Clear the interval when the game is over
         }
     }
 }
@@ -150,6 +180,9 @@ function updateScore() {
     scoreElement.innerHTML = score;
 }
 
+// New selector for the "Show Scoreboard" button
+const showScoreboardButton = document.getElementById('show-scoreboard-btn');
+
 // Function to show game over screen
 function gameOver() {
     backgroundMusic.pause(); // Pause background music
@@ -166,24 +199,167 @@ function gameOver() {
         `;
     }
 
+    // Remove the event listener for text input
+    text.removeEventListener('input', handleInput);
+
+    // Show the "Show Scoreboard" button
+    showScoreboardButton.style.display = 'block';
+
     // Show the restart button
     const restartButton = document.getElementById('restart-btn');
     restartButton.classList.remove('hide');
 
     endGameElement.style.display = "flex";
-    gameStarted = false; // Reset gameStarted to false
+    gameStarted = true; // Reset gameStarted to true
+
+    // Save the score
+    saveScore({ hits: score, percentage: calculatePercentage(score, words.length), date: new Date() });
 
     // Reset UI
     scoreElement.innerHTML = score;
     timeElement.innerHTML = time + "s";
+
+    // Remove the hidden class from the "Show Scoreboard" button
+    showScoreboardButton.classList.remove('hide');
+
+    // Toggle the "Show Scoreboard" button based on the game state
+    // toggleScoreboard(); // Remove this line
 }
+
+// Function to save the score to localStorage
+function saveScore(scoreObj) {
+    const existingScoreIndex = scores.findIndex(
+        (score) =>
+            score.hits === scoreObj.hits &&
+            score.percentage === scoreObj.percentage
+    );
+
+    if (existingScoreIndex === -1) {
+        // Score with the same hits and percentage doesn't exist, add it to the array
+        scores.push(scoreObj);
+    } else {
+        // Score with the same hits and percentage exists, update only if the new score is better
+        if (scoreObj.hits > scores[existingScoreIndex].hits ||
+            (scoreObj.hits === scores[existingScoreIndex].hits &&
+             scoreObj.date > scores[existingScoreIndex].date)) {
+            scores[existingScoreIndex] = scoreObj;
+        }
+    }
+
+    // Sort scores by hits in descending order, and by date in ascending order for the same hits
+    scores.sort((a, b) => {
+        if (b.hits !== a.hits) {
+            return b.hits - a.hits; // Sort by hits in descending order
+        } else {
+            return a.date - b.date; // Sort by date in ascending order
+        }
+    });
+
+    // Keep only the top 10 scores
+    scores = scores.slice(0, 10);
+
+    // Store the sorted scores array in localStorage
+    localStorage.setItem('scores', JSON.stringify(scores));
+
+    // Display the updated scoreboard
+    displayScoreboard();
+}
+
+
+
+
+// Function to calculate the percentage
+function calculatePercentage(hits, totalWords) {
+    return (hits / totalWords) * 100;
+}
+
+// Function to display the scoreboard
+function displayScoreboard() {
+    // Clear existing content
+    scoreboardContainer.innerHTML = '';
+
+    // Check if there are scores to display
+    if (scores.length === 0) {
+        scoreboardContainer.innerHTML = '<p id="no-scores">No games have been played yet.</p>';
+        return;
+    }
+
+    // Create and append header
+    const header = document.createElement('h2');
+    header.textContent = 'High Scores';
+    scoreboardContainer.appendChild(header);
+
+    // Create and append scoreboard elements
+    const scoreboardList = document.createElement('ul');
+    scores.forEach((score, index) => {
+        const listItem = document.createElement('li');
+
+        // Format date and time
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+        };
+
+        const formattedDateTime = score.date.toLocaleString(undefined, options);
+
+        listItem.textContent = `# ${index + 1} \u00A0 ${score.hits} words \u00A0 ${score.percentage.toFixed(2)}% \u00A0 ${formattedDateTime}`;
+        scoreboardList.appendChild(listItem);
+    });
+
+    scoreboardContainer.appendChild(scoreboardList);
+}
+
+
+
+function toggleScoreboard() {
+    // Toggle the display property of the scoreboard container
+    scoreboardContainer.style.display = (scoreboardContainer.style.display === 'block') ? 'none' : 'block';
+
+    // Update scoreboard content if it's being displayed
+    if (scoreboardContainer.style.display === 'block') {
+        // Update scoreboard content
+        displayScoreboard();
+    }
+}   
+
+// Add click event listener to the new button
+showScoreboardButton.addEventListener('click', toggleScoreboard);
+
+// New selector for the "Clear Scoreboard" button
+const clearScoreboardButton = document.getElementById('clear-scoreboard-btn');
+
+// Add click event listener to the "Clear Scoreboard" button
+clearScoreboardButton.addEventListener('click', clearScoreboard);
+
+// Function to clear the scoreboard
+function clearScoreboard() {
+    // Check if there is only one score
+    if (scores.length <= 1) {
+        return;
+    }
+
+    // Clear scores in localStorage
+    localStorage.removeItem('scores');
+
+    // Clear the scores array
+    scores = [];
+
+    // Update the displayed scoreboard
+    displayScoreboard();
+}
+
+
 
 
 // New selector for the Restart button
 const restartButton = document.getElementById('restart-btn');
 
 // Add click event listener to the Restart button
-restartButton.addEventListener('click', restartGame);
+restartButton.addEventListener('click', restartGame);   
 
 // New selector for the Restart button within the container
 const restartButtonBlock = document.getElementById('restart-button');
@@ -204,23 +380,51 @@ startButtonTopLeft.addEventListener('click', startGameCountdown);
 function restartGame() {
     if (gameStarted) {
         clearInterval(timeInterval);
+
+        // Clear localStorage
+        localStorage.removeItem('scores');
+
+        // Reset other game variables
         score = 0;
-        time = 99; // Reset time to 99 seconds
-        wordsCopy = [...words]; // Reset the words array
+        time = 15;
+        wordsCopy = [...words];
         addWordToElement();
 
+        // Hide the scoreboard container
+        scoreboardContainer.style.display = 'none';
+
+        showScoreboardButton.style.display = 'none';
+
         restartButton.classList.add('hide');
-        endGameElement.style.display = "none";
+        endGameElement.style.display = 'none';
+
+        // Hide the Clear Scoreboard button
+        clearScoreboardButton.style.display = 'none';
 
         // Reset UI
         scoreElement.innerHTML = score;
-        timeElement.innerHTML = time + "s";
+        timeElement.innerHTML = time + 's';
+
+        // Clear the input value
+        text.value = '';
 
         // Initiate countdown for the game to start again
         startGameCountdown();
     }
 }
 
+
+
+// Add click event listener to the "Show Scoreboard" button
+showScoreboardButton.addEventListener('click', toggleScoreboard);
+
+showScoreboardButton.addEventListener('click', function () {
+    clearScoreboardButton.style.display = 'block';
+});
+
+
+// Add click event listener to the Restart button
+restartButton.addEventListener('click', restartGame);
 
 // Typing event
 text.addEventListener("input", (e) => {
